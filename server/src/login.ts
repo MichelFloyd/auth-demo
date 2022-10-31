@@ -1,6 +1,7 @@
 import { GraphQLError } from 'graphql';
 import { compare } from 'bcrypt';
 import { findUserByUserName } from './users';
+import { genHash } from './genHash';
 
 const comparePromise = async (password, hash) => {
   return new Promise((resolve, reject) => {
@@ -13,10 +14,12 @@ const comparePromise = async (password, hash) => {
 
 export const login = async (_, { username, password }) => {
   const user = findUserByUserName(username);
+  console.log(genHash(password));
   if (user && (await comparePromise(password, user.hash))) return user;
-  throw new GraphQLError('Invalid credentials', {
-    extensions: {
-      code: 'UNAUTHENTICATED',
-    },
-  });
+  else
+    throw new GraphQLError('Invalid credentials', {
+      extensions: {
+        code: 'UNAUTHENTICATED',
+      },
+    });
 };

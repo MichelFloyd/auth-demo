@@ -1,9 +1,14 @@
+import { tUser, users } from './users';
+
 import { books } from './books';
 import { login } from './login';
-import { users } from './users';
+import { setTokens } from './jwt';
 
 // Resolvers define how to fetch the types defined in your schema.
 export const resolvers = {
+  UserTokens: {
+    tokens: ({ id }) => setTokens({ id }),
+  },
   Mutation: {
     login,
   },

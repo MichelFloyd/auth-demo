@@ -5,14 +5,14 @@ import jwt from 'jsonwebtoken';
 
 const { sign, verify } = jwt;
 
-export const setTokens = ({ id, tokenCount }) => {
+export const setTokens = ({ id }) => {
   const accessUser = { id };
   const accessToken = sign(
     { user: accessUser },
     process.env.ACCESSTOKENSECRET,
     { expiresIn: process.env.ACCESS_TOKEN_DURATION }
   );
-  const refreshUser = { id, count: tokenCount };
+  const refreshUser = { id };
   const refreshToken = sign(
     { user: refreshUser },
     process.env.REFRESHTOKENSECRET,
