@@ -17,6 +17,10 @@ export const typeDefs = gql`
   JWT tokens
   """
   type Tokens {
+    """
+    id is the id of the associated user
+    """
+    id: ID!
     accessToken: String
     refreshToken: String
   }

@@ -6,21 +6,16 @@ import jwt from 'jsonwebtoken';
 const { sign, verify } = jwt;
 
 export const setTokens = ({ id }) => {
-  const accessUser = { id };
-  const accessToken = sign(
-    { user: accessUser },
-    process.env.ACCESSTOKENSECRET,
-    { expiresIn: process.env.ACCESS_TOKEN_DURATION }
-  );
-  const refreshUser = { id };
-  const refreshToken = sign(
-    { user: refreshUser },
-    process.env.REFRESHTOKENSECRET,
-    { expiresIn: process.env.REFRESH_TOKEN_DURATION }
-  );
+  const user = { id };
+  const accessToken = sign({ user }, process.env.ACCESSTOKENSECRET, {
+    expiresIn: process.env.ACCESS_TOKEN_DURATION,
+  });
+  const refreshToken = sign({ user }, process.env.REFRESHTOKENSECRET, {
+    expiresIn: process.env.REFRESH_TOKEN_DURATION,
+  });
   const expiresAt = new Date();
   expiresAt.setDate(expiresAt.getDate() + 60);
-  return { accessToken, refreshToken };
+  return { id, accessToken, refreshToken };
 };
 
 export const validateAccessToken = (token) => {
