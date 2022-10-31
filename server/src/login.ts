@@ -1,7 +1,7 @@
 import { GraphQLError } from 'graphql';
 import { compare } from 'bcrypt';
 import { findUserByUserName } from './users';
-import { genHash } from './genHash';
+import { setTokens } from './jwt';
 
 const comparePromise = async (password, hash) => {
   return new Promise((resolve, reject) => {
@@ -14,7 +14,8 @@ const comparePromise = async (password, hash) => {
 
 export const login = async (_, { username, password }) => {
   const user = findUserByUserName(username);
-  if (user && (await comparePromise(password, user.hash))) return user;
+  if (user && (await comparePromise(password, user.hash)))
+    return setTokens(user);
   else
     throw new GraphQLError('Invalid credentials', {
       extensions: {

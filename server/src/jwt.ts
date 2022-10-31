@@ -20,7 +20,7 @@ export const setTokens = ({ id }) => {
   );
   const expiresAt = new Date();
   expiresAt.setDate(expiresAt.getDate() + 60);
-  return { accessToken, refreshToken, expiresAt };
+  return { accessToken, refreshToken };
 };
 
 export const validateAccessToken = (token) => {

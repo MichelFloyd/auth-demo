@@ -30,14 +30,6 @@ export const typeDefs = gql`
     nickname: String!
   }
 
-  """
-  " User and tokens
-  """
-  type UserTokens {
-    user: User
-    tokens: Tokens
-  }
-
   # The "Query" type is special: it lists all of the available queries that
   # clients can execute, along with the return type for each. In this
   # case, the "books" query returns an array of zero or more Books (defined above).
@@ -45,6 +37,6 @@ export const typeDefs = gql`
     books: [Book]
   }
   type Mutation {
-    login(username: String!, password: String!): UserTokens
+    login(username: String!, password: String!): Tokens
   }
 `;
