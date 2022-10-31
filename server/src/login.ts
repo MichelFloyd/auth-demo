@@ -14,7 +14,6 @@ const comparePromise = async (password, hash) => {
 
 export const login = async (_, { username, password }) => {
   const user = findUserByUserName(username);
-  console.log(genHash(password));
   if (user && (await comparePromise(password, user.hash))) return user;
   else
     throw new GraphQLError('Invalid credentials', {
