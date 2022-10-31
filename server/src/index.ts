@@ -1,4 +1,5 @@
 import { ApolloServer } from '@apollo/server';
+import { context } from './context';
 import dotenv from 'dotenv';
 import { resolvers } from './resolvers';
 import { startStandaloneServer } from '@apollo/server/standalone';
@@ -19,6 +20,7 @@ const server = new ApolloServer({
 //  3. prepares your app to handle incoming requests
 
 const { url } = await startStandaloneServer(server, {
+  context,
   listen: { port: parseInt(process.env.PORT) },
 });
 
