@@ -13,8 +13,6 @@ export const setTokens = (user) => {
   const refreshToken = sign({ user }, process.env.REFRESH_TOKEN_SECRET, {
     expiresIn: process.env.REFRESH_TOKEN_DURATION,
   });
-  const expiresAt = new Date();
-  expiresAt.setDate(expiresAt.getDate() + 60);
   return { id: user.id, accessToken, refreshToken };
 };
 
