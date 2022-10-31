@@ -1,6 +1,5 @@
 import { books } from './books';
 import { login } from './login';
-import { setTokens } from './jwt';
 
 // Resolvers define how to fetch the types defined in your schema.
 export const resolvers = {
