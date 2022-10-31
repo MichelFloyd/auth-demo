@@ -1,13 +1,41 @@
+import gql from 'graphql-tag';
+
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
 // your data.
 
-export const typeDefs = `#graphql
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-  # This "Book" type defines the queryable fields for every book in our data source.
+export const typeDefs = gql`
+  """
+  This "Book" type defines the queryable fields for every book in our data source.
+  """
   type Book {
     title: String
     author: String
+  }
+
+  """
+  JWT tokens
+  """
+  type Tokens {
+    accessToken: String
+    refreshToken: String
+  }
+
+  """
+  " User type - note that we don't expose the hash
+  """
+  type User {
+    id: ID!
+    username: String!
+    nickname: String!
+  }
+
+  """
+  " User and tokens
+  """
+  type UserTokens {
+    user: User
+    tokens: Tokens
   }
 
   # The "Query" type is special: it lists all of the available queries that
@@ -15,5 +43,8 @@ export const typeDefs = `#graphql
   # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
     books: [Book]
+  }
+  type Mutation {
+    login(username: String!, password: String!): UserTokens
   }
 `;

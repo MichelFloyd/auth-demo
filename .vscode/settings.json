@@ -1,0 +1,7 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "sql.linter.executablePath": "/Applications/anaconda3/bin/sqlfluff",
+  "sql.linter.run": "onType"
+ }

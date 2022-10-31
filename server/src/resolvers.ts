@@ -1,18 +1,13 @@
-const books = [
-  {
-    title: 'The Awakening',
-    author: 'Kate Chopin',
-  },
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster',
-  },
-];
+import { books } from './books';
+import { login } from './login';
+import { users } from './users';
 
 // Resolvers define how to fetch the types defined in your schema.
-// This resolver retrieves books from the "books" array above.
 export const resolvers = {
+  Mutation: {
+    login,
+  },
   Query: {
-    books: () => books,
+    books: () => books, // This resolver retrieves books from the "books" array above.
   },
 };

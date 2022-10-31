@@ -13,8 +13,11 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/server": "^4.0.4",
+    "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
-    "graphql": "^16.6.0"
+    "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.6",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "@types/node": "^18.11.8",
