@@ -1,7 +1,6 @@
 // manage security tokens sent and received from the server
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GRAPHQL_HOST } from '@env';
 
 export interface tokens {
   accessToken: string;
@@ -11,11 +10,14 @@ export interface tokens {
 export const setTokens = ({ accessToken, refreshToken }: tokens) => {
   try {
     if (accessToken)
-      AsyncStorage.setItem('graphqlHost', GRAPHQL_HOST).then(() => {
-        AsyncStorage.setItem('accessToken', accessToken).then(() => {
-          if (refreshToken) AsyncStorage.setItem('refreshToken', refreshToken);
-        });
-      });
+      AsyncStorage.setItem('graphqlHost', process.env.GRAPHQL_HOST || '').then(
+        () => {
+          AsyncStorage.setItem('accessToken', accessToken).then(() => {
+            if (refreshToken)
+              AsyncStorage.setItem('refreshToken', refreshToken);
+          });
+        }
+      );
   } catch (e) {
     console.error(e);
   }
