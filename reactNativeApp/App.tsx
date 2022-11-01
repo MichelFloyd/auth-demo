@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import { ApolloProvider } from '@apollo/client';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { client } from './graphql/client';
 
