@@ -1,18 +1,19 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import { ApolloProvider } from '@apollo/client';
+import { Navigation } from './navigation';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { client } from './graphql/client';
 
-export const App = () => (
-  <ApolloProvider client={client}>
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  </ApolloProvider>
-);
+export default function App() {
+  return (
+    <ApolloProvider client={client}>
+      <Navigation />
+      <StatusBar />
+    </ApolloProvider>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
