@@ -22,3 +22,5 @@ export const users = [
 
 export const findUserByUserName = (username) =>
   users.find((user) => user.username === username);
+
+export const findUserById = (id) => users.find((user) => user.id === id);

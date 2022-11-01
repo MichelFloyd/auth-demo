@@ -1,7 +1,6 @@
 import { books } from './books';
 import { login } from './login';
 
-// Resolvers define how to fetch the types defined in your schema.
 export const resolvers = {
   Mutation: {
     login,
