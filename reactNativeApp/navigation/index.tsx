@@ -17,6 +17,7 @@ export const Navigation = () => (
       initialRouteName="public"
       screenOptions={{
         tabBarStyle: [{ display: 'flex' }, null],
+        tabBarLabelStyle: { fontSize: 16 },
       }}
     >
       <BottomTab.Screen
