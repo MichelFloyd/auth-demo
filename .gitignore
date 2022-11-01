@@ -4,12 +4,12 @@
 */dist
 
 # rn app
-./reactNativeApp/.expo/*
-./reactNativeApp/npm-debug.*
-./reactNativeApp/*.jks
-./reactNativeApp/*.p8
-./reactNativeApp/*.p12
-./reactNativeApp/*.key
-./reactNativeApp/*.mobileprovision
-./reactNativeApp/*.orig.*
-./reactNativeApp/web-build/
+reactNativeApp/.expo
+reactNativeApp/npm-debug.*
+reactNativeApp/*.jks
+reactNativeApp/*.p8
+reactNativeApp/*.p12
+reactNativeApp/*.key
+reactNativeApp/*.mobileprovision
+reactNativeApp/*.orig.*
+reactNativeApp/web-build/
