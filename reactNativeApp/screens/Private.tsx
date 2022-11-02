@@ -1,15 +1,29 @@
-import * as React from 'react';
-
 import { Button, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
 
 import { Login } from '../components/Login';
+import { hasTokens } from '../util/tokens';
 
 export const Private: React.FC<Props> = ({ navigation }) => {
+  const [isLoggedIn, setLogin] = useState(false);
+  useEffect(() => {
+    hasTokens().then((ht) => setLogin(ht));
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text>Private route</Text>
-      <Login />
-      <Button title="Login" />
+      {isLoggedIn ? (
+        <>
+          <Text>user is logged in</Text>
+          <Button title="Logout" />
+        </>
+      ) : (
+        <>
+          <Login />
+          <Button title="Login" />
+        </>
+      )}
     </View>
   );
 };

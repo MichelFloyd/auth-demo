@@ -11,6 +11,7 @@ export const Login: React.FC<Props> = () => {
         clearButtonMode={'always'}
         placeholder="username"
         autoFocus={true}
+        style={styles.textInput}
       />
 
       <TextInput
@@ -18,16 +19,20 @@ export const Login: React.FC<Props> = () => {
         textContentType="password"
         clearButtonMode={'always'}
         placeholder="password"
+        style={styles.textInput}
       />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  textInput: {
+    width: 200,
+    textAlign: 'center',
+    marginVertical: 8,
+    padding: 2,
+    fontSize: 16,
+    borderRadius: 6,
+    backgroundColor: '#eee',
   },
 });
