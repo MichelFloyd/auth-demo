@@ -1,10 +1,17 @@
 export const books = [
   {
-    title: 'The Awakening',
-    author: 'Kate Chopin',
+    id: 1,
+    title: 'Engineering Management for the Rest of Us',
+    author: 'Sarah Drasner',
   },
   {
-    title: 'City of Glass',
-    author: 'Paul Auster',
+    id: 2,
+    title: 'Girls who Code',
+    author: 'Reshma Saujani',
+  },
+  {
+    id: 3,
+    title: 'Founders at Work',
+    author: 'Jessica Livingston',
   },
 ];
