@@ -1,10 +1,10 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import { clearTokens, hasTokens } from '../util/tokens';
 
 import { Login } from '../components/Login';
-import { hasTokens } from '../util/tokens';
 
-export const Private: React.FC<Props> = ({ navigation }) => {
+export const Private = () => {
   const [isLoggedIn, setLogin] = useState(false);
   useEffect(() => {
     hasTokens().then((ht) => setLogin(ht));
@@ -16,12 +16,17 @@ export const Private: React.FC<Props> = ({ navigation }) => {
       {isLoggedIn ? (
         <>
           <Text>user is logged in</Text>
-          <Button title="Logout" />
+          <Button
+            title="Logout"
+            onPress={() => {
+              clearTokens();
+              setLogin(false);
+            }}
+          />
         </>
       ) : (
         <>
-          <Login />
-          <Button title="Login" />
+          <Login setLoggedIn={setLogin} />
         </>
       )}
     </View>

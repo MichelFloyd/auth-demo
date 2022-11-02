@@ -25,7 +25,7 @@ export const setTokens = ({ accessToken, refreshToken }: tokens) => {
 
 export const getTokens = async () => {
   const graphqlHost = await AsyncStorage.getItem('graphqlHost');
-  if (graphqlHost && graphqlHost !== GRAPHQL_HOST)
+  if (graphqlHost && graphqlHost !== process.env.GRAPHQL_HOST)
     return { accessToken: null, refreshToken: null };
   else {
     const accessToken = await AsyncStorage.getItem('accessToken');
@@ -38,7 +38,7 @@ export const getTokens = async () => {
 
 export const hasTokens = async () => {
   const graphqlHost = await AsyncStorage.getItem('graphqlHost');
-  if (graphqlHost && graphqlHost !== GRAPHQL_HOST) return false;
+  if (graphqlHost && graphqlHost !== process.env.GRAPHQL_HOST) return false;
   else {
     const accessToken = await AsyncStorage.getItem('accessToken');
     const refreshToken = await AsyncStorage.getItem('refreshToken');
