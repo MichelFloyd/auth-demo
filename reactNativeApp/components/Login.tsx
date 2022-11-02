@@ -36,6 +36,7 @@ export const Login: React.FC<Props> = ({ setLoggedIn }) => {
   });
   return (
     <KeyboardAvoidingView>
+      <Text style={styles.label}>Please login!</Text>
       <TextInput
         keyboardType="name-phone-pad"
         textContentType="name"
@@ -78,6 +79,10 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 14,
     textAlign: 'center',
+  },
+  label: {
+    textAlign: 'center',
+    padding: 5,
   },
   textInput: {
     width: 200,

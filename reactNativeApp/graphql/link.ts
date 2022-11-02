@@ -7,9 +7,6 @@ import { getTokens, setTokens } from '../util/tokens';
 import { getHost } from './getHost';
 import { setContext } from '@apollo/client/link/context';
 
-// The following modifies the graphql host to permit local testing on real phones
-// see https://stackoverflow.com/a/56943681/2805154
-
 const uri = getHost();
 const httpLink = new HttpLink({ uri });
 
@@ -21,7 +18,6 @@ const authLink = setContext(async (_, { headers }) => {
       ...headers,
       'x-access-token': accessToken,
       'x-refresh-token': refreshToken,
-      'x-app-name': 'driverApp',
     },
   };
 });
@@ -35,12 +31,10 @@ const afterwareLink = new ApolloLink((operation, forward) => {
     const context = operation.getContext();
     const accessToken = context.response.headers.get('x-access-token');
     const refreshToken = context.response.headers.get('x-refresh-token');
-    if (accessToken || refreshToken) {
-      console.info(`got new tokens!`);
-      setTokens({ accessToken, refreshToken });
-    }
+    if (accessToken || refreshToken) setTokens({ accessToken, refreshToken });
+
     if (typeof response !== 'object')
-      console.error(`Response is of type ${typeof response}`);
+      console.error(`Response is of type ${typeof response}, expected object`);
     return response;
   });
 });

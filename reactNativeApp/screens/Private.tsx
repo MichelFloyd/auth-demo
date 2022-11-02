@@ -1,13 +1,13 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { clearTokens, hasTokens } from '../util/tokens';
+import { clearTokens, hasValidTokens } from '../util/tokens';
 
 import { Login } from '../components/Login';
 
 export const Private = () => {
   const [isLoggedIn, setLogin] = useState(false);
   useEffect(() => {
-    hasTokens().then((ht) => setLogin(ht));
+    hasValidTokens().then((ht) => setLogin(ht));
   }, []);
 
   return (
