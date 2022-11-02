@@ -9,8 +9,9 @@ export const typeDefs = gql`
   This "Book" type defines the queryable fields for every book in our data source.
   """
   type Book {
-    title: String
-    author: String
+    id: ID!
+    title: String!
+    author: String!
   }
 
   """
@@ -39,6 +40,7 @@ export const typeDefs = gql`
   # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
     books: [Book]
+    me: User
   }
   type Mutation {
     login(username: String!, password: String!): Tokens
