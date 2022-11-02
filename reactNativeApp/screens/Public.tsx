@@ -16,14 +16,14 @@ const BOOKS = gql`
 `;
 
 interface iBook {
+  id: number;
   title: string;
   author: string;
 }
 
 export const Public = () => {
-  const { data, loading, error } = useQuery(BOOKS);
-  if (loading) return <Spinner />;
-  else if (data)
+  const { data, error } = useQuery(BOOKS);
+  if (data)
     return (
       <View style={styles.container}>
         <Text>Public route</Text>
@@ -41,6 +41,7 @@ export const Public = () => {
         <Text>Error loading data: {error.message}</Text>
       </View>
     );
+  else return <Spinner />;
 };
 
 const styles = StyleSheet.create({

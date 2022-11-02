@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { clearTokens, hasValidTokens } from '../util/tokens';
 
 import { Login } from '../components/Login';
+import { Profile } from '../components/Profile';
 
 export const Private = () => {
   const [isLoggedIn, setLogin] = useState(false);
@@ -12,10 +13,9 @@ export const Private = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Private route</Text>
       {isLoggedIn ? (
         <>
-          <Text>user is logged in</Text>
+          <Profile />
           <Button
             title="Logout"
             onPress={() => {
@@ -25,9 +25,7 @@ export const Private = () => {
           />
         </>
       ) : (
-        <>
-          <Login setLoggedIn={setLogin} />
-        </>
+        <Login setLoggedIn={setLogin} />
       )}
     </View>
   );
@@ -39,5 +37,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  centered: {
+    display: 'flex',
+    textAlign: 'center',
   },
 });
