@@ -1,6 +1,3 @@
-// see https://github.com/apollographql/apollo-client/issues/6212#issuecomment-762195367
-// for info on how to access AsyncStorage when constructing the headers
-
 import { ApolloLink, HttpLink, from } from '@apollo/client';
 import { getTokens, setTokens } from '../util/tokens';
 
