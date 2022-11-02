@@ -21,10 +21,19 @@ export const Profile = () => {
     const { id, username, nickname } = data.me;
     return (
       <View style={styles.container}>
-        <Text>User Profile</Text>
-        <Text style={styles.id}>{id}</Text>
-        <Text style={styles.name}>{username}</Text>
-        <Text style={styles.name}>{nickname}</Text>
+        <Text style={styles.h1}>User Profile</Text>
+        <Text style={styles.id}>
+          <Text style={styles.label}>id: </Text>
+          {id}
+        </Text>
+        <Text style={styles.name}>
+          <Text style={styles.label}>username: </Text>
+          {username}
+        </Text>
+        <Text style={styles.name}>
+          <Text style={styles.label}>nickname: </Text>
+          {nickname}
+        </Text>
       </View>
     );
   } else if (error)
@@ -43,9 +52,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  h1: {
+    fontWeight: '700',
+    fontSize: 16,
+    paddingVertical: 5,
+  },
   id: {
     fontStyle: 'italic',
     textAlign: 'center',
+  },
+  label: {
+    fontWeight: '500',
   },
   name: {
     textAlign: 'center',
