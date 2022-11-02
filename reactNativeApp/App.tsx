@@ -1,10 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native';
-
 import { ApolloProvider } from '@apollo/client';
 import { Navigation } from './navigation';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+import { StyleSheet } from 'react-native';
 import { client } from './graphql/client';
 
 export default function App() {
