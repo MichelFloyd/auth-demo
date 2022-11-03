@@ -2,6 +2,9 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Buffer } from 'buffer';
+import { getHost } from '../graphql/getHost';
+
+const tokenList = ['graphqlHost', 'accessToken', 'refreshToken']; //order is important!
 
 export interface tokens {
   accessToken: string;
@@ -10,51 +13,33 @@ export interface tokens {
 
 export const setTokens = ({ accessToken, refreshToken }: tokens) => {
   console.info(`got new tokens!`);
-  try {
-    const promiseArray = [];
-    if (process.env.GRAPHQL_HOST)
-      promiseArray.push(
-        AsyncStorage.setItem('graphqlHost', process.env.GRAPHQL_HOST)
-      );
-    if (accessToken)
-      promiseArray.push(AsyncStorage.setItem('accessToken', accessToken));
-    if (refreshToken)
-      promiseArray.push(AsyncStorage.setItem('refreshToken', refreshToken));
-    Promise.all(promiseArray);
-  } catch (error: any) {
+  AsyncStorage.multiSet([
+    ['graphqlHost', getHost()],
+    ['accessToken', accessToken],
+    ['refreshToken', refreshToken],
+  ]).catch((error: any) => {
     console.error(`Error setting tokens: ${error.message}`);
-  }
+  });
 };
 
 export const getTokens = async () => {
-  const graphqlHost = await AsyncStorage.getItem('graphqlHost');
-  if (graphqlHost && graphqlHost !== process.env.GRAPHQL_HOST)
-    return { accessToken: null, refreshToken: null };
-  else {
-    const accessToken = await AsyncStorage.getItem('accessToken');
-    const refreshToken = await AsyncStorage.getItem('refreshToken');
-    return { accessToken, refreshToken };
-  }
+  const kvArray = await AsyncStorage.multiGet(tokenList);
+  /* in development and staging we often bounce around between servers with different private keys
+   * by associating tokens with a particular server we can avoid invalid token errors */
+  const graphqlHost = kvArray[0][1];
+  return graphqlHost === getHost()
+    ? { accessToken: kvArray[1][1], refreshToken: kvArray[2][1] }
+    : { accessToken: null, refreshToken: null };
 };
 
 // see if the app has tokens set and at least one is not expired
 export const hasValidTokens = async () => {
-  /* in development and staging we often bounce around between servers with different private keys
-   * by associating tokens with a particular server we can avoid invalid token errors */
-  const graphqlHost = await AsyncStorage.getItem('graphqlHost');
-  if (graphqlHost === process.env.GRAPHQL_HOST) {
-    const accessToken = await AsyncStorage.getItem('accessToken');
-    if (isTokenValid(accessToken)) return true;
-    else {
-      const refreshToken = await AsyncStorage.getItem('refreshToken');
-      if (isTokenValid(refreshToken)) return true;
-    }
-  }
-  return false;
+  const { accessToken, refreshToken } = await getTokens();
+  return isTokenValid(accessToken) || isTokenValid(refreshToken);
 };
 
 export const clearTokens = () => {
-  AsyncStorage.multiRemove(['graphqlHost', 'accessToken', 'refreshToken']);
+  AsyncStorage.multiRemove(tokenList);
 };
 
 // adapted from https://stackoverflow.com/a/69058154/2805154
@@ -64,6 +49,5 @@ const isTokenValid = (token: string | null) => {
     const decodedJson = Buffer.from(payloadBase64, 'base64').toString();
     const expiration = JSON.parse(decodedJson).exp * 1000;
     return Date.now() <= expiration;
-  }
-  return false;
+  } else return false;
 };
