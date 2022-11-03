@@ -53,12 +53,9 @@ export const hasValidTokens = async () => {
   return false;
 };
 
-export const clearTokens = () =>
-  Promise.all([
-    AsyncStorage.removeItem('graphqlHost'),
-    AsyncStorage.removeItem('accessToken'),
-    AsyncStorage.removeItem('refreshToken'),
-  ]);
+export const clearTokens = () => {
+  AsyncStorage.multiRemove(['graphqlHost', 'accessToken', 'refreshToken']);
+};
 
 // adapted from https://stackoverflow.com/a/69058154/2805154
 const isTokenValid = (token: string | null) => {
