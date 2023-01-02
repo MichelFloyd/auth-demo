@@ -3,12 +3,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Buffer } from 'buffer';
 import { getHost } from '../graphql/getHost';
+import jwt_decode from 'jwt-decode';
 
 const tokenList = ['graphqlHost', 'accessToken', 'refreshToken']; //order is important!
 
 export interface tokens {
   accessToken: string;
   refreshToken: string;
+}
+
+interface iToken {
+  id: string;
+  exp: number;
+  iat: number;
 }
 
 export const setTokens = ({ accessToken, refreshToken }: tokens) => {
@@ -41,6 +48,9 @@ export const hasValidTokens = async () => {
 export const clearTokens = () => {
   AsyncStorage.multiRemove(tokenList);
 };
+
+export const tokenExpiryTime = (token: string) =>
+  new Date(jwt_decode<iToken>(token)?.iat);
 
 // adapted from https://stackoverflow.com/a/69058154/2805154
 const isTokenValid = (token: string | null) => {

@@ -8,10 +8,12 @@
       "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}/server/dist/index.js",
       "envFile": "${workspaceFolder}/server/.env",
+      "preLaunchTask": "compileServer",
       "runtimeArgs": [
         "--experimental-modules",
         "--es-module-specifier-resolution=node"
-      ]
+      ],
+      "runtimeExecutable": "/usr/local/bin/node"
     }
   ]
 }

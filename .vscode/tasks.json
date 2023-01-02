@@ -1,0 +1,10 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "compileServer",
+      "type": "shell",
+      "command": "cd ${workspaceFolder}/server/ && npm run compile"
+    }
+  ]
+}
