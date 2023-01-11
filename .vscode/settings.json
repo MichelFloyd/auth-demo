@@ -2,5 +2,5 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "window.title": "${activeEditorShort}${separator}${rootName} ${separator} [Branch: main]"
+  "window.title": "${activeEditorShort}${separator}${rootName} ${separator} [Branch: react-web-app]"
 }
