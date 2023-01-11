@@ -1,7 +1,5 @@
 // manage security tokens sent and received from the server
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getHost } from '../graphql/getHost';
 import jwt_decode from 'jwt-decode';
 
 const tokenList = ['graphqlHost', 'accessToken', 'refreshToken']; //order is important!
@@ -19,24 +17,20 @@ interface iToken {
 
 export const setTokens = ({ accessToken, refreshToken }: tokens) => {
   console.info(`got new tokens!`);
-  AsyncStorage.multiSet([
-    ['graphqlHost', getHost()],
-    ['accessToken', accessToken],
-    ['refreshToken', refreshToken],
-  ]).catch((error: any) => {
-    console.error(`Error setting tokens: ${error.message}`);
-  });
+  console.log(process.env.REACT_APP_GRAPHQL_HOST);
+  localStorage.setItem(
+    'graphqlHost',
+    process.env.REACT_APP_GRAPHQL_HOST || 'undefined'
+  );
+  localStorage.setItem('accessToken', accessToken);
+  localStorage.setItem('refreshToken', refreshToken);
 };
 
-export const getTokens = async () => {
-  const kvArray = await AsyncStorage.multiGet(tokenList);
-  /* in development and staging we often bounce around between servers with different private keys
-   * by associating tokens with a particular server we can avoid invalid token errors */
-  const graphqlHost = kvArray[0][1];
-  return graphqlHost === getHost()
-    ? { accessToken: kvArray[1][1], refreshToken: kvArray[2][1] }
-    : { accessToken: null, refreshToken: null };
-};
+export const getTokens = async () => ({
+  graphqlHost: localStorage.getItem('graphqlHost') || null,
+  accessToken: localStorage.getItem('accessToken') || null,
+  refreshToken: localStorage.getItem('refreshToken') || null,
+});
 
 // see if the app has tokens set and at least one is not expired
 export const hasValidTokens = async () => {
@@ -45,7 +39,9 @@ export const hasValidTokens = async () => {
 };
 
 export const clearTokens = () => {
-  AsyncStorage.multiRemove(tokenList);
+  tokenList.forEach((token) => {
+    localStorage.clearItem(token);
+  });
 };
 
 export const tokenExpiryTime = (token: string) =>
