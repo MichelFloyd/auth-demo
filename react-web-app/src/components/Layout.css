@@ -1,0 +1,18 @@
+.grid {
+  height: 100vh;
+  width: 100vw;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+}
+
+.grid > div {
+  text-align: center;
+  align-self: center;
+  align-items: center;
+  height: 100%;
+  outline: solid 1px #ccc;
+  justify-content: center;
+  display: flex;
+}

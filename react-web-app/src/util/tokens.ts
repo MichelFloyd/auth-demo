@@ -9,15 +9,14 @@ export interface tokens {
   refreshToken: string;
 }
 
-interface iToken {
-  id: string;
+export interface iToken {
+  user: { id: string };
   exp: number;
   iat: number;
 }
 
 export const setTokens = ({ accessToken, refreshToken }: tokens) => {
   console.info(`got new tokens!`);
-  console.log(process.env.REACT_APP_GRAPHQL_HOST);
   localStorage.setItem(
     'graphqlHost',
     process.env.REACT_APP_GRAPHQL_HOST || 'undefined'
@@ -40,12 +39,12 @@ export const hasValidTokens = () => {
 
 export const clearTokens = () => {
   tokenList.forEach((token) => {
-    localStorage.clearItem(token);
+    localStorage.removeItem(token);
   });
 };
 
 export const tokenExpiryTime = (token: string) =>
-  token ? new Date(jwt_decode<iToken>(token)?.iat) : false;
+  token ? new Date(jwt_decode<iToken>(token)?.exp) : 0;
 
 export const isTokenValid = (token: string) =>
-  tokenExpiryTime(token) >= new Date();
+  token ? Date.now() <= jwt_decode<iToken>(token)?.exp * 1000 : false;

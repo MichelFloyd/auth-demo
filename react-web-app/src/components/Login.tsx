@@ -35,7 +35,7 @@ export const Login: React.FC<Props> = ({ setLoggedIn }) => {
     },
   });
   return (
-    <div>
+    <div className="container">
       <div className="label">Please login!</div>
       <input
         onChange={(event) => {
@@ -56,12 +56,9 @@ export const Login: React.FC<Props> = ({ setLoggedIn }) => {
         className="textInput"
       />
       {credError ? <div className="error">Invalid credentials</div> : null}
-      {/* <Button
-        title="Login"
-        onPress={() => {
-          mutate();
-        }}
-      /> */}
+      <button className="button" onClick={() => mutate()}>
+        Login
+      </button>
     </div>
   );
 };

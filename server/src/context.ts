@@ -22,11 +22,11 @@ export const context = async ({ req, res }) => {
       ({ accessToken, refreshToken } = setTokens(tokenUser));
       res.set('x-access-token', accessToken);
       res.set('x-refresh-token', refreshToken);
-    }
-  } else
-    console.info(
-      `Invalid/expired access token presented but refreshToken null or missing!`
-    );
+    } else
+      console.info(
+        `Invalid/expired access token presented but refreshToken null or missing!`
+      );
+  }
   /* If we have an id finde the user and add it to the context for easy access in resolvers
    * This will includes *all* the user fields however these won't go
    * back to the client unless requested via a graphql query */

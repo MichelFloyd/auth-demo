@@ -1,27 +1,32 @@
 import '../App.css';
 
 import { clearTokens, hasValidTokens } from '../util/tokens';
-import { useEffect, useState } from 'react';
 
 import { Login } from '../components/Login';
 import { Profile } from '../components/Profile';
+import { useEffect } from 'react';
 
-export const Private = () => {
-  const [isLoggedIn, setLogin] = useState(false);
-  useEffect(() => setLogin(hasValidTokens()), []);
+interface Props {
+  isLoggedIn: boolean;
+  setLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const Private: React.FC<Props> = ({ isLoggedIn, setLogin }) => {
+  useEffect(() => setLogin(hasValidTokens()), [setLogin]);
+
+  const logout = () => {
+    clearTokens();
+    setLogin(false);
+  };
 
   return (
     <div className="container">
       {isLoggedIn ? (
         <>
           <Profile />
-          {/* <Button
-            title="Logout"
-            onPress={() => {
-              clearTokens();
-              setLogin(false);
-            }}
-          /> */}
+          <button className="button" onClick={logout}>
+            Logout
+          </button>
         </>
       ) : (
         <Login setLoggedIn={setLogin} />

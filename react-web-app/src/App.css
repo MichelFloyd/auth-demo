@@ -39,6 +39,8 @@
 
 .container {
   flex: 1;
+  flex-wrap: 'wrap';
+  flex-direction: column;
   background-color: '#fff';
   align-items: 'center';
   justify-content: 'center';
@@ -92,4 +94,13 @@
   font-size: 16px;
   border-radius: 6px;
   background-color: #eee;
+}
+
+.button {
+  border-radius: 5px;
+  background-color: aqua;
+  text-align: center;
+  padding: 2px;
+  width: 100px;
+  margin: auto;
 }
