@@ -1,3 +1,5 @@
+import '../App.css';
+
 import React, { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 
@@ -28,20 +30,13 @@ export const Login: React.FC<Props> = ({ setLoggedIn }) => {
       setLoggedIn(true);
       setCredError(false);
     },
-    onError: () => {
+    onError: (error) => {
       setCredError(true);
     },
   });
   return (
     <div>
-      <div
-        style={{
-          textAlign: 'center',
-          padding: 5,
-        }}
-      >
-        Please login!
-      </div>
+      <div className="label">Please login!</div>
       <input
         onChange={(event) => {
           setUsername(event.target.value);
@@ -49,15 +44,7 @@ export const Login: React.FC<Props> = ({ setLoggedIn }) => {
         }}
         placeholder="username"
         autoFocus={true}
-        style={{
-          width: 200,
-          textAlign: 'center',
-          margin: '8px 0px 8px 0px',
-          padding: 2,
-          fontSize: 16,
-          borderRadius: 6,
-          backgroundColor: '#eee',
-        }}
+        className="textInput"
       />
 
       <input
@@ -66,27 +53,9 @@ export const Login: React.FC<Props> = ({ setLoggedIn }) => {
           setCredError(false);
         }}
         placeholder="password"
-        style={{
-          width: 200,
-          textAlign: 'center',
-          margin: '8px 0px 8px 0px',
-          padding: 2,
-          fontSize: 16,
-          borderRadius: 6,
-          backgroundColor: '#eee',
-        }}
+        className="textInput"
       />
-      {credError ? (
-        <div
-          style={{
-            color: 'red',
-            fontSize: 14,
-            textAlign: 'center',
-          }}
-        >
-          Invalid credentials
-        </div>
-      ) : null}
+      {credError ? <div className="error">Invalid credentials</div> : null}
       {/* <Button
         title="Login"
         onPress={() => {

@@ -1,29 +1,32 @@
 import { ApolloLink, HttpLink, from } from '@apollo/client';
-import { getTokens, setTokens, tokenExpiryTime } from '../util/tokens';
+import {
+  getTokens,
+  isTokenValid,
+  setTokens,
+  tokenExpiryTime,
+} from '../util/tokens';
 
 import { setContext } from '@apollo/client/link/context';
 
 const uri = process.env.REACT_APP_GRAPHQL_HOST;
 const httpLink = new HttpLink({ uri });
 
-// get the access and refresh tokens from AsyncStorage and use them to set the request headers
-const authLink = setContext(async (_, { headers }) => {
-  let { accessToken, refreshToken } = await getTokens();
+// get the access and refresh tokens from local storage and use them to set the request headers
+const authLink = setContext((_, { headers }) => {
+  let { accessToken, refreshToken } = getTokens();
   if (accessToken && refreshToken) {
     if (tokenExpiryTime(accessToken) > anHourFromNow())
-      // access token expires at least an hour from now
       return {
         headers: { ...headers, 'x-access-token': accessToken },
       };
-    else if (tokenExpiryTime(refreshToken) > new Date())
-      // refresh token is unexpired
+    else if (isTokenValid(refreshToken))
       return { headers: { ...headers, 'x-refresh-token': refreshToken } };
   }
   return { headers: { ...headers } }; // no unexpired tokens
 });
 
 // our Apollo server is regularly sending new access and refresh tokens in
-// the response headers. These need to be extracted and pushed to AsyncStorage
+// the response headers. These need to be extracted and pushed to local storage
 // See https://zach.codes/access-response-headers-in-apollo-client/
 
 const afterwareLink = new ApolloLink((operation, forward) => {
@@ -32,8 +35,6 @@ const afterwareLink = new ApolloLink((operation, forward) => {
     const accessToken = context?.response?.headers?.get('x-access-token');
     const refreshToken = context?.response?.headers?.get('x-refresh-token');
     if (accessToken || refreshToken) setTokens({ accessToken, refreshToken });
-    if (typeof response !== 'object')
-      console.error(`Response is of type ${typeof response}, expected object`);
     return response;
   });
 });

@@ -26,15 +26,15 @@ export const setTokens = ({ accessToken, refreshToken }: tokens) => {
   localStorage.setItem('refreshToken', refreshToken);
 };
 
-export const getTokens = async () => ({
-  graphqlHost: localStorage.getItem('graphqlHost') || null,
-  accessToken: localStorage.getItem('accessToken') || null,
-  refreshToken: localStorage.getItem('refreshToken') || null,
+export const getTokens = () => ({
+  graphqlHost: localStorage.getItem('graphqlHost') || '',
+  accessToken: localStorage.getItem('accessToken') || '',
+  refreshToken: localStorage.getItem('refreshToken') || '',
 });
 
 // see if the app has tokens set and at least one is not expired
-export const hasValidTokens = async () => {
-  const { accessToken, refreshToken } = await getTokens();
+export const hasValidTokens = () => {
+  const { accessToken, refreshToken } = getTokens();
   return isTokenValid(accessToken) || isTokenValid(refreshToken);
 };
 
@@ -45,7 +45,7 @@ export const clearTokens = () => {
 };
 
 export const tokenExpiryTime = (token: string) =>
-  new Date(jwt_decode<iToken>(token)?.iat);
+  token ? new Date(jwt_decode<iToken>(token)?.iat) : false;
 
-const isTokenValid = (token: string | null) =>
-  token?.length && new Date() <= new Date(jwt_decode<iToken>(token)?.iat);
+export const isTokenValid = (token: string) =>
+  tokenExpiryTime(token) >= new Date();

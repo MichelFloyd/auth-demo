@@ -5,7 +5,7 @@ import { isDevice } from 'expo-device';
 // see https://stackoverflow.com/a/56943681/2805154
 export const getHost = () => {
   const { manifest } = Constants;
-  let uri = process.env.GRAPHQL_HOST;
+  let uri = process.env.GRAPHQL_HOST || 'unknown';
   if (!isDevice) console.info(`connecting to ${uri}`);
   let altLocalHost = manifest?.debuggerHost
     ? manifest.debuggerHost.split(':').shift()

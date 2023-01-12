@@ -1,5 +1,10 @@
 import { ApolloLink, HttpLink, from } from '@apollo/client';
-import { getTokens, setTokens, tokenExpiryTime } from '../util/tokens';
+import {
+  getTokens,
+  isTokenValid,
+  setTokens,
+  tokenExpiryTime,
+} from '../util/tokens';
 
 import { getHost } from './getHost';
 import { setContext } from '@apollo/client/link/context';
@@ -12,12 +17,10 @@ const authLink = setContext(async (_, { headers }) => {
   let { accessToken, refreshToken } = await getTokens();
   if (accessToken && refreshToken) {
     if (tokenExpiryTime(accessToken) > anHourFromNow())
-      // access token expires at least an hour from now
       return {
         headers: { ...headers, 'x-access-token': accessToken },
       };
-    else if (tokenExpiryTime(refreshToken) > new Date())
-      // refresh token is unexpired
+    else if (isTokenValid(refreshToken))
       return { headers: { ...headers, 'x-refresh-token': refreshToken } };
   }
   return { headers: { ...headers } }; // no unexpired tokens
@@ -33,8 +36,6 @@ const afterwareLink = new ApolloLink((operation, forward) => {
     const accessToken = context?.response?.headers?.get('x-access-token');
     const refreshToken = context?.response?.headers?.get('x-refresh-token');
     if (accessToken || refreshToken) setTokens({ accessToken, refreshToken });
-    if (typeof response !== 'object')
-      console.error(`Response is of type ${typeof response}, expected object`);
     return response;
   });
 });
