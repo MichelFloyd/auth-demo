@@ -44,7 +44,7 @@ export const clearTokens = () => {
 };
 
 export const tokenExpiryTime = (token: string) =>
-  token ? new Date(jwt_decode<iToken>(token)?.exp) : 0;
+  token ? new Date(jwt_decode<iToken>(token)?.exp * 1000) : new Date(0);
 
 export const isTokenValid = (token: string) =>
   token ? Date.now() <= jwt_decode<iToken>(token)?.exp * 1000 : false;

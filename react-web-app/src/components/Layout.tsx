@@ -3,6 +3,7 @@ import './Layout.css';
 import { useEffect, useState } from 'react';
 
 import { DisplayToken } from './DisplayToken';
+import { Login } from './Login';
 import { Private } from './Private';
 import { Public } from './Public';
 import { getTokens } from '../util/tokens';
@@ -21,12 +22,13 @@ export const Layout = () => {
         <Public />
       </div>
       <div>
-        <Private isLoggedIn={isLoggedIn} setLogin={setLogin} />
+        <Login isLoggedIn={isLoggedIn} setLogin={setLogin} />
+      </div>
+      <div>
+        <Private isLoggedIn={isLoggedIn} />
       </div>
       <div>
         <DisplayToken token={tokens.accessToken} name="accessToken" />
-      </div>
-      <div>
         <DisplayToken token={tokens.refreshToken} name="refreshToken" />
       </div>
     </div>

@@ -1,9 +1,8 @@
 import '../App.css';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { clearTokens, hasValidTokens, setTokens } from '../util/tokens';
 import { gql, useMutation } from '@apollo/client';
-
-import { setTokens } from '../util/tokens';
 
 const LOGIN = gql`
   mutation logMeIn($username: String!, $password: String!) {
@@ -16,25 +15,37 @@ const LOGIN = gql`
 `;
 
 interface Props {
-  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  isLoggedIn: boolean;
+  setLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const Login: React.FC<Props> = ({ setLoggedIn }) => {
+export const Login: React.FC<Props> = ({ isLoggedIn, setLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [credError, setCredError] = useState(false);
+  useEffect(() => setLogin(hasValidTokens()), []);
   const [mutate] = useMutation(LOGIN, {
     variables: { username, password },
     onCompleted: ({ login }) => {
       setTokens(login);
-      setLoggedIn(true);
+      setLogin(true);
       setCredError(false);
     },
     onError: (error) => {
       setCredError(true);
     },
   });
-  return (
+
+  const logout = () => {
+    clearTokens();
+    setLogin(false);
+  };
+
+  return isLoggedIn ? (
+    <button className="button" onClick={logout}>
+      Logout
+    </button>
+  ) : (
     <div className="container">
       <div className="label">Please login!</div>
       <input

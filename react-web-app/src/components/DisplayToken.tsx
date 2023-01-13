@@ -12,8 +12,8 @@ export const DisplayToken: React.FC<Props> = ({ token, name }) => {
     return (
       <div>
         {name}
-        <div>Issued at (iat): {new Date(iat).toLocaleString()}</div>
-        <div>Expires at(exp): {new Date(exp).toLocaleString()}</div>
+        <div>Issued at (iat): {new Date(iat * 1000).toLocaleString()}</div>
+        <div>Expires at(exp): {new Date(exp * 1000).toLocaleString()}</div>
         <div>user.id: {user.id}</div>
       </div>
     );

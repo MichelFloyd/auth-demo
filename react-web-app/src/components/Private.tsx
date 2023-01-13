@@ -8,29 +8,12 @@ import { useEffect } from 'react';
 
 interface Props {
   isLoggedIn: boolean;
-  setLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const Private: React.FC<Props> = ({ isLoggedIn, setLogin }) => {
-  useEffect(() => setLogin(hasValidTokens()), [setLogin]);
-
-  const logout = () => {
-    clearTokens();
-    setLogin(false);
-  };
-
+export const Private: React.FC<Props> = ({ isLoggedIn }) => {
   return (
     <div className="container">
-      {isLoggedIn ? (
-        <>
-          <Profile />
-          <button className="button" onClick={logout}>
-            Logout
-          </button>
-        </>
-      ) : (
-        <Login setLoggedIn={setLogin} />
-      )}
+      {isLoggedIn ? <Profile /> : <span>Not logged in!</span>}
     </div>
   );
 };
