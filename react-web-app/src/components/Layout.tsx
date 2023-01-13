@@ -19,15 +19,15 @@ export const Layout = () => {
   return (
     <div className="grid">
       <div>
-        <Public />
+        <Login isLoggedIn={isLoggedIn} setLogin={setLogin} />
       </div>
       <div>
-        <Login isLoggedIn={isLoggedIn} setLogin={setLogin} />
+        <Public />
       </div>
       <div>
         <Private isLoggedIn={isLoggedIn} />
       </div>
-      <div>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         <DisplayToken token={tokens.accessToken} name="accessToken" />
         <DisplayToken token={tokens.refreshToken} name="refreshToken" />
       </div>

@@ -28,19 +28,18 @@ export const Profile = () => {
     const { id, username, nickname } = data.me;
     return (
       <div className="container">
-        <div className="h1">User Profile</div>
+        <div className="h1">User Profile - Private Route</div>
         <div className="label">
           id:
-          <div className="value"></div>
-          {id}
+          <span className="value">{id}</span>
         </div>
         <div className="label">
-          <div className="value">username:</div>
-          {username}
+          username:
+          <span className="value">{username}</span>
         </div>
         <div className="label">
-          <div className="value">nickname:</div>
-          {nickname}
+          nickname:
+          <span className="value">{nickname}</span>
         </div>
       </div>
     );

@@ -62,7 +62,7 @@
 }
 
 .author {
-  font-style: 'italic';
+  font-style: italic;
   text-align: 'center';
 }
 
@@ -71,7 +71,7 @@
 }
 
 .title {
-  font-weight: '700';
+  font-weight: 700;
   text-align: 'center';
 }
 
@@ -84,6 +84,11 @@
 .label {
   text-align: 'center';
   padding: 5px;
+}
+
+.value {
+  font-weight: 700;
+  font-style: normal;
 }
 
 .textInput {
@@ -103,4 +108,8 @@
   padding: 2px;
   width: 100px;
   margin: auto;
+}
+
+.h1 {
+  font-weight: 700;
 }
