@@ -1,4 +1,5 @@
 import '../App.css';
+import './Login.css';
 
 import React, { useEffect, useState } from 'react';
 import { clearTokens, hasValidTokens, setTokens } from '../util/tokens';
@@ -59,6 +60,7 @@ export const Login: React.FC<Props> = ({ isLoggedIn, setLogin }) => {
       />
 
       <input
+        type="password"
         onChange={(event) => {
           setPassword(event.target.value);
           setCredError(false);

@@ -1,4 +1,5 @@
 import '../App.css';
+import './Public.css';
 
 import { gql, useQuery } from '@apollo/client';
 

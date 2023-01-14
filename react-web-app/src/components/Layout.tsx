@@ -10,11 +10,12 @@ import { getTokens } from '../util/tokens';
 
 export const Layout = () => {
   const [isLoggedIn, setLogin] = useState(false);
+  const [lastUpdate, setLastUpdate] = useState(new Date());
   const [tokens, setTokens] = useState(getTokens());
 
   useEffect(() => {
     setTokens(getTokens());
-  }, [isLoggedIn]);
+  }, [isLoggedIn, lastUpdate]);
 
   return (
     <div className="grid">
@@ -25,7 +26,7 @@ export const Layout = () => {
         <Public />
       </div>
       <div>
-        <Private isLoggedIn={isLoggedIn} />
+        <Private isLoggedIn={isLoggedIn} setLastUpdate={setLastUpdate} />
       </div>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <DisplayToken token={tokens.accessToken} name="accessToken" />

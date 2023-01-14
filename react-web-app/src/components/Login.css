@@ -1,0 +1,17 @@
+.textInput {
+  width: 200px;
+  text-align: 'center';
+  margin: 8px 0 8px 0;
+  padding: 2;
+  font-size: 16px;
+  border-radius: 6px;
+  background-color: #eee;
+}
+
+.button {
+  border-radius: 5px;
+  text-align: center;
+  padding: 2px;
+  width: 100px;
+  margin: auto;
+}

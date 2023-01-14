@@ -19,7 +19,7 @@ export const setTokens = ({ accessToken, refreshToken }: tokens) => {
   console.info(`got new tokens!`);
   localStorage.setItem(
     'graphqlHost',
-    process.env.REACT_APP_GRAPHQL_HOST || 'undefined'
+    process.env.REACT_APP_GRAPHQL_HOST as string
   );
   localStorage.setItem('accessToken', accessToken);
   localStorage.setItem('refreshToken', refreshToken);
@@ -37,11 +37,10 @@ export const hasValidTokens = () => {
   return isTokenValid(accessToken) || isTokenValid(refreshToken);
 };
 
-export const clearTokens = () => {
+export const clearTokens = () =>
   tokenList.forEach((token) => {
     localStorage.removeItem(token);
   });
-};
 
 export const tokenExpiryTime = (token: string) =>
   token ? new Date(jwt_decode<iToken>(token)?.exp * 1000) : new Date(0);

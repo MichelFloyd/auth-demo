@@ -1,0 +1,9 @@
+.label {
+  text-align: 'center';
+  padding: 5px;
+}
+
+.value {
+  font-weight: 700;
+  font-style: normal;
+}
