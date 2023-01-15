@@ -34,6 +34,7 @@ export const getTokens = () => ({
 // see if the app has tokens set and at least one is not expired
 export const hasValidTokens = () => {
   const { accessToken, refreshToken } = getTokens();
+  console.log(accessToken, refreshToken);
   return isTokenValid(accessToken) || isTokenValid(refreshToken);
 };
 

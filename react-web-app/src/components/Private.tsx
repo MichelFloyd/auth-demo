@@ -21,10 +21,8 @@ interface Props {
 }
 
 export const Private: React.FC<Props> = ({ isLoggedIn, setLastUpdate }) => {
-  const { data, loading, error, refetch } = useQuery(ME, {
-    onCompleted: () => setLastUpdate(new Date()),
-  });
-  const refetchData = () => refetch().then(() => setLastUpdate(new Date()));
+  const { data, loading, error, refetch } = useQuery(ME);
+  const refetchHandler = () => refetch().then(() => setLastUpdate(new Date()));
 
   if (!isLoggedIn)
     return (
@@ -58,7 +56,7 @@ export const Private: React.FC<Props> = ({ isLoggedIn, setLastUpdate }) => {
           nickname:
           <span className="value">{nickname}</span>
         </div>
-        <button onClick={refetchData}>Refetch</button>
+        <button onClick={refetchHandler}>Refetch</button>
       </div>
     );
   }

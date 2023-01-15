@@ -8,6 +8,7 @@ interface Props {
 
 export const DisplayToken: React.FC<Props> = ({ token, name }) => {
   if (token) {
+    console.log(token);
     const { exp, iat, user } = jwt_decode<iToken>(token);
     return (
       <div style={{ margin: '10px 0 10px 0' }}>
