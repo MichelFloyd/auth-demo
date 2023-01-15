@@ -20,6 +20,8 @@ export const context = async ({ req, res }) => {
        * this enables the client to transparently obtain fresh tokens without a separate GraphQL query */
       id = tokenUser.id;
       ({ accessToken, refreshToken } = setTokens(tokenUser));
+      res.set('Access-Control-Expose-Headers', 'x-access-token');
+      res.set('Access-Control-Expose-Headers', 'x-refresh-token');
       res.set('x-access-token', accessToken);
       res.set('x-refresh-token', refreshToken);
     } else
